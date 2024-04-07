@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AdvertiserProfile {
+  id_no     Int    @id @default(autoincrement())
+  name      String
+  last_name String
+  email     String
+  mobile    String
+  // Define other fields as needed
+  Ad        Ad[]
+}
+
+// Define the model for the ad table
+model Ad {
+  id                Int               @id @default(autoincrement())
+  campaign_name     String
+  advertiser        AdvertiserProfile @relation(fields: [advertiser_id], references: [id_no])
+  advertiser_id     Int
+  status            String
+  age               Int
+  gender            String
+  location          String
+  audience          String
+  target_audience   String
+  specific_keywords String
+  // Define other fields as needed
+  keywords          String
+  schedule          String
+  frequency         String
+  deliver           String
+}
